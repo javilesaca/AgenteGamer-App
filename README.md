@@ -44,23 +44,24 @@ El proyecto incluye persistencia local con **Room**, integración con APIs de vi
 ## 🧱 Arquitectura del proyecto
 
 El proyecto sigue el patrón **MVVM** estándar:
-
+```text
 com.miapp.agentegamer/
 │
 ├── data/
-│ ├── model/ → Entidades Room
-│ ├── dao/ → Interfaces de acceso a datos
-│ ├── database/ → AppDatabase (Room)
-│ └── repository/ → Lógica intermedia entre BD y ViewModels
+│ ├── model/ # Entidades Room
+│ ├── dao/ # Interfaces DAO (Room)
+│ ├── database/ # AppDatabase (Room)
+│ └── repository/ # Capa de repositorio (entre BD y ViewModels)
 │
 ├── ui/
-│ ├── gastos/ → Lista y gestión de gastos
-│ ├── lanzamientos/→ Juegos provenientes de la API
-│ ├── wishlist/ → Gestión de favoritos
-│ └── main/ → Actividad principal / navegación
+│ ├── main/ # Actividad principal / navegación
+│ ├── gastos/ # Pantallas para lista y gestión de gastos
+│ ├── lanzamientos/ # Pantallas con datos de las APIs de videojuegos
+│ └── wishlist/ # Pantallas de juegos guardados / favoritos
 │
-└── agent/ → AgenteFinanciero con reglas de decisión
-
+└── agent/
+└── AgenteFinanciero/ # Lógica del "agente" y sus reglas
+```
 
 ---
 
@@ -85,7 +86,7 @@ com.miapp.agentegamer/
 
 1. Clonar este repositorio:
    ```bash
-   git clone https://github.com/TU-USUARIO/AgenteGamer-App.git
+   git clone https://github.com/javilesaca/AgenteGamer-App.git
 2. Abrir en Android Studio.
 
 3. Reconstruir proyecto:

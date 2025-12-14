@@ -1,45 +1,44 @@
 package com.miapp.agentegamer.data.repository;
 
-import android.content.Context;
+import android.app.Application;
 
-import androidx.room.Room;
+import androidx.lifecycle.LiveData;
 
+import com.miapp.agentegamer.data.dao.GastoDao;
 import com.miapp.agentegamer.data.database.AppDatabase;
 import com.miapp.agentegamer.data.model.GastoEntity;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GastoRepository {
 
-    private AppDatabase db;
+    private final GastoDao gastoDao;
+    private final LiveData<List<GastoEntity>> listaGastos;
+    private final ExecutorService executorService;
 
-    public GastoRepository(Context context) {
-        db = Room.databaseBuilder(
-                context.getApplicationContext(),
-                AppDatabase.class,
-                "agente_gamer_db"
-        ).allowMainThreadQueries().build();
-        // Nota: allowMainThreadQueries es solo para desarrollo.
-        // Más adelante lo quitare y hare las operaciones en hilos.
+    public GastoRepository(Application application) {
+        AppDatabase db = AppDatabase.getInstance(application);
+        gastoDao = db.gastoDao();
+        listaGastos = gastoDao.getAllGastos();
+
+        executorService = Executors.newSingleThreadExecutor();
     }
 
-    // INSERTAR
+    public LiveData<List<GastoEntity>> obtenerGastos() {
+        return listaGastos;
+    }
+
     public void insertarGasto(GastoEntity gasto) {
-        db.gastoDao().insertGasto(gasto);
+        executorService.execute(() -> gastoDao.insertGasto(gasto));
     }
 
-    // ACTUALIZAR
     public void actualizarGasto(GastoEntity gasto) {
-        db.gastoDao().updateGasto(gasto);
+        executorService.execute(() -> gastoDao.updateGasto(gasto));
     }
 
-    // ELIMINAR
     public void borrarGasto(GastoEntity gasto) {
-        db.gastoDao().deleteGasto(gasto);
-    }
-
-    // OBTENER TODOS
-    public List<GastoEntity> obtenerGastos() {
-        return db.gastoDao().getAllGastos();
+        executorService.execute(() -> gastoDao.deleteGasto(gasto));
     }
 }

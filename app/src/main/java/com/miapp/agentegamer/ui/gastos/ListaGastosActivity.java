@@ -1,13 +1,17 @@
 package com.miapp.agentegamer.ui.gastos;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Button;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.miapp.agentegamer.R;
+import com.miapp.agentegamer.data.model.GastoEntity;
 import com.miapp.agentegamer.viewmodel.GastoViewModel;
 
 public class ListaGastosActivity extends AppCompatActivity {
@@ -22,8 +26,9 @@ public class ListaGastosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_gastos);
 
         recyclerView = findViewById(R.id.recyclerGastos);
-        adapter = new GastoAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new GastoAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
         gastoViewModel = new ViewModelProvider(this).get(GastoViewModel.class);
@@ -31,5 +36,14 @@ public class ListaGastosActivity extends AppCompatActivity {
         gastoViewModel.getListaGastos().observe(this, gastos -> {
             adapter.setLista(gastos);
         });
+
+        // Botón de prueba
+        Button btnAgregarPrueba = findViewById(R.id.btnAgregarPrueba);
+        btnAgregarPrueba.setOnClickListener(v -> {
+            GastoEntity gastoPrueba = new GastoEntity("Compra test", 19.99, System.currentTimeMillis());
+            gastoViewModel.insertar(gastoPrueba);
+        });
     }
+
+
 }

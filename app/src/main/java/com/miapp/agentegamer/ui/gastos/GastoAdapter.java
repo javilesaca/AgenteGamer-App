@@ -9,14 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.miapp.agentegamer.R;
-import com.miapp.agentegamer.data.model.Gasto;
+import com.miapp.agentegamer.data.model.GastoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GastoAdapter extends RecyclerView.Adapter<GastoAdapter.GastoViewHolder> {
 
-    private List<Gasto> lista = new ArrayList<>();
+    private List<GastoEntity> lista;
+
+    public GastoAdapter(List<GastoEntity> listaInicial){
+        this.lista = listaInicial;
+    }
 
     @NonNull
     @Override
@@ -28,9 +32,9 @@ public class GastoAdapter extends RecyclerView.Adapter<GastoAdapter.GastoViewHol
 
     @Override
     public void onBindViewHolder(@NonNull GastoViewHolder holder, int position) {
-        Gasto g = lista.get(position);
-        holder.textConcepto.setText(g.getConcepto());
-        holder.textCantidad.setText(String.valueOf(g.getCantidad()));
+        GastoEntity g = lista.get(position);
+        holder.textConcepto.setText(g.getNombreJuego());
+        holder.textCantidad.setText(String.valueOf(g.getPrecio()));
     }
 
     @Override
@@ -38,7 +42,7 @@ public class GastoAdapter extends RecyclerView.Adapter<GastoAdapter.GastoViewHol
         return lista.size();
     }
 
-    public void setLista(List<Gasto> nuevaLista) {
+    public void setLista(List<GastoEntity> nuevaLista) {
         this.lista = nuevaLista;
         notifyDataSetChanged();
     }

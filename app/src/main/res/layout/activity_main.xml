@@ -16,48 +16,80 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
+        android:layout_marginTop="32dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Botón de ver juegos -->
+    <!-- Textview que muestra la cantidad gastada -->
+    <TextView
+        android:id="@+id/tvTotalGastos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Total gastado: 0 €"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Recomendación del agente financiero -->
+    <TextView
+        android:id="@+id/tvRecomendacion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Estado financiero"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalGastos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Botón Ver Juegos -->
     <Button
         android:id="@+id/btnVerJuegos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Ver Juegos"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp"
+        app:layout_constraintTop_toBottomOf="@id/tvRecomendacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Botón de Wishlist -->
+    <!-- Botón Wishlist -->
     <Button
         android:id="@+id/btnWishlist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Wishlist"
-        app:layout_constraintTop_toBottomOf="@id/btnVerJuegos"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp"
+        app:layout_constraintTop_toBottomOf="@id/btnVerJuegos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Botón de Gastos (opcional para tu agente financiero) -->
+    <!-- Botón Gastos -->
     <Button
         android:id="@+id/btnGastos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Gastos"
-        app:layout_constraintTop_toBottomOf="@id/btnWishlist"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp"
+        app:layout_constraintTop_toBottomOf="@id/btnWishlist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

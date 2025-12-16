@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 import androidx.lifecycle.ViewModelProvider;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.miapp.agentegamer.R;
 import com.miapp.agentegamer.agent.AgenteFinanciero;
+import com.miapp.agentegamer.data.model.GastoEntity;
+import com.miapp.agentegamer.ui.gastos.ListaGastosActivity;
 import com.miapp.agentegamer.viewmodel.GastoViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,11 +42,9 @@ public class MainActivity extends AppCompatActivity {
         AgenteFinanciero agente = new AgenteFinanciero(100);
 
         viewModel.getListaGastos().observe(this, gastos -> {
-            double total = agente.calcularTotalGastos(gastos);
-            String estado = agente.evaluarEstado(total);
-
+            double total = 0;
+            for (GastoEntity g : gastos) total += g.getPrecio();
             tvTotalGastos.setText("Total gastado: " + total + " €");
-            tvRecomendacion.setText(estado);
         });
 
         viewModel.getRecomendacion().observe(this, texto -> {
@@ -58,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Toca para ver Wishlist", Toast.LENGTH_SHORT).show()
         );
 
-        btnGastos.setOnClickListener(v ->
-                Toast.makeText(this, "Toca para ver Gastos", Toast.LENGTH_SHORT).show()
-        );
+        btnGastos.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListaGastosActivity.class);
+            startActivity(intent);
+        });
     }
 }
 

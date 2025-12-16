@@ -40,14 +40,14 @@ public class AgenteFinanciero {
     }
 
     public String evaluarEstado(double total){
-        if (total == 0) {
-            return "Sin gastos registrados.";
-        } else if (total < presupuestoMensual * 0.5) {
-            return "Tenemos un buen control de gastos.";
-        } else if (total < presupuestoMensual) {
-            return "Nos estamos acercando al límite del presupuesto.";
+        double restante = presupuestoMensual - total;
+
+        if (restante <= 0) {
+            return "Has agotado tu presupuesto mensual.";
+        } else if (restante < 20) {
+            return "Cuidado: te queda poco presupuesto.";
         } else {
-            return "Hemos superado el presupuesto mensual.";
+            return "Te quedan " + restante + " €. Puedes permitirte un juego.";
         }
     }
 }

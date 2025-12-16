@@ -4,6 +4,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import android.app.Application;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.miapp.agentegamer.agent.AgenteFinanciero;
@@ -16,13 +17,14 @@ public class GastoViewModel extends AndroidViewModel {
 
     private final GastoRepository repository;
     private final LiveData<List<GastoEntity>> listaGastos;
-
-    private AgenteFinanciero agenteFinanciero = new AgenteFinanciero(250);
+    private final MutableLiveData<String> recomendacion = new MutableLiveData<>();
+    private final AgenteFinanciero agenteFinanciero = new AgenteFinanciero(250);
 
     public GastoViewModel(@NonNull Application application) {
         super(application);
         repository = new GastoRepository(application);
         listaGastos = repository.obtenerGastos();
+        listaGastos.observeForever(this::procesarGastos);
     }
 
     public LiveData<List<GastoEntity>> getListaGastos() {
@@ -47,9 +49,13 @@ public class GastoViewModel extends AndroidViewModel {
     }
 
     public LiveData<String> getRecomendacion() {
-        return Transformations.map(listaGastos, gastos ->
-                agenteFinanciero.generarRecomendacion(gastos)
-        );
+        return recomendacion;
+    }
+
+    public void procesarGastos(List<GastoEntity> gastos) {
+        double total = agenteFinanciero.calcularTotalGastos(gastos);
+        String texto = agenteFinanciero.evaluarEstado(total);
+        recomendacion.setValue(texto);
     }
 
 }

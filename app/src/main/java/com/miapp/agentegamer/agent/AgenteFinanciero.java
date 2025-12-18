@@ -50,4 +50,18 @@ public class AgenteFinanciero {
             return "Te quedan " + restante + " €. Puedes permitirte un juego.";
         }
     }
+
+    public enum EstadoFinanciero {
+        VERDE, AMARILLO, ROJO
+    }
+
+    public EstadoFinanciero obtenerEstado(double totalGastado) {
+        if (totalGastado < presupuestoMensual * 0.5) {
+            return EstadoFinanciero.VERDE;
+        } else if (totalGastado < presupuestoMensual * 0.8) {
+            return EstadoFinanciero.AMARILLO;
+        } else {
+            return EstadoFinanciero.ROJO;
+        }
+    }
 }

@@ -35,13 +35,14 @@ android {
 
 dependencies {
     // Core
-    implementation("androidx.core:core:1.13.1")
+    implementation("androidx.core:core:1.17.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
 
     // UI
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // Lifecycle & ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.10.0")

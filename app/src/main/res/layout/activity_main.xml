@@ -35,6 +35,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <View
+        android:id="@+id/viewIndicador"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/indicador_circle"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalGastos"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="8dp"/>
+
     <!-- Recomendación del agente financiero -->
     <TextView
         android:id="@+id/tvRecomendacion"
@@ -44,9 +53,24 @@
         android:textSize="16sp"
         android:gravity="center"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTotalGastos"
+        app:layout_constraintTop_toBottomOf="@id/viewIndicador"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        app:layout_constraintTop_toBottomOf="@id/tvRecomendacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"/>
+
+
+
 
     <!-- Botón Ver Juegos -->
     <Button
@@ -57,7 +81,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintTop_toBottomOf="@id/tvRecomendacion"
+        app:layout_constraintTop_toBottomOf="@id/pieChart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -86,9 +110,17 @@
         app:layout_constraintTop_toBottomOf="@id/btnWishlist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
+    <!-- Botón para desarrollo exclusivo y borrar datos de la Room -->
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Reset gastos (DEV)"
+        android:backgroundTint="@color/design_default_color_error"
+        app:layout_constraintTop_toBottomOf="@id/btnGastos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

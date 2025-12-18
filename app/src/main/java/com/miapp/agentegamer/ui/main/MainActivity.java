@@ -1,6 +1,8 @@
 package com.miapp.agentegamer.ui.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,11 +11,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.miapp.agentegamer.R;
 import com.miapp.agentegamer.agent.AgenteFinanciero;
 import com.miapp.agentegamer.data.model.GastoEntity;
 import com.miapp.agentegamer.ui.gastos.ListaGastosActivity;
 import com.miapp.agentegamer.viewmodel.GastoViewModel;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.charts.PieChart;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     public TextView tvRecomendacion;
     public TextView tvTotalGastos;
     private GastoViewModel viewModel;
+    private View indicador;
+    public PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
         btnWishlist = findViewById(R.id.btnWishlist);
         btnGastos = findViewById(R.id.btnGastos);
 
-        AgenteFinanciero agente = new AgenteFinanciero(100);
+        indicador = findViewById(R.id.viewIndicador);
+        pieChart = findViewById(R.id.pieChart);
+        /*AgenteFinanciero agente = new AgenteFinanciero(100);*/
 
         viewModel.getListaGastos().observe(this, gastos -> {
             double total = 0;
@@ -47,9 +62,40 @@ public class MainActivity extends AppCompatActivity {
             tvTotalGastos.setText("Total gastado: " + total + " €");
         });
 
+        viewModel.getListaGastos().observe(this, gastos -> {
+            List<PieEntry> entries = new ArrayList<>();
+
+            for (GastoEntity g : gastos) {
+                entries.add(new PieEntry((float) g.getPrecio(), g.getId()));
+            }
+
+            PieDataSet dataSet = new PieDataSet(entries, "Distribución de gastos");
+            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+            PieData data = new PieData(dataSet);
+            pieChart.setData(data);
+            pieChart.invalidate();
+        });
+
         viewModel.getRecomendacion().observe(this, texto -> {
             tvRecomendacion.setText(texto);
         });
+
+        viewModel.getEstadoFinanciero().observe(this, estado -> {
+            int color;
+            switch (estado) {
+                case VERDE:
+                    color = Color.GREEN;
+                    break;
+                case AMARILLO:
+                    color = Color.YELLOW;
+                    break;
+                default:
+                    color = Color.RED;
+            }
+            indicador.setBackgroundColor(color);
+        });
+
         // Listeners simples
         btnVerJuegos.setOnClickListener(v ->
                 Toast.makeText(this, "Toca para ver Juegos", Toast.LENGTH_SHORT).show()
@@ -63,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, ListaGastosActivity.class);
             startActivity(intent);
         });
+        //Boton implementado para uso exclusivo de desarrollo
+        Button btnReset = findViewById(R.id.btnReset);
+        btnReset.setOnClickListener(v -> {
+            viewModel.borrarTodosLosGastos();
+            Toast.makeText(this, "Gastos borrados", Toast.LENGTH_SHORT).show();
+        });
+
+
     }
 }
 

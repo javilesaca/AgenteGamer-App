@@ -41,4 +41,8 @@ public class GastoRepository {
     public void borrarGasto(GastoEntity gasto) {
         executorService.execute(() -> gastoDao.deleteGasto(gasto));
     }
+
+    public void borrarTodosLosGastos() {
+        executorService.execute(() -> gastoDao.deleteAll());
+    }
 }

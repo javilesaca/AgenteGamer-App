@@ -25,4 +25,7 @@ public interface GastoDao {
 
     @Query("SELECT * FROM gastos ORDER BY fecha DESC")
     LiveData<List<GastoEntity>> getAllGastos();
+
+    @Query("DELETE FROM gastos")
+    void deleteAll();
 }

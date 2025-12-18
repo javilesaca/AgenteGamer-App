@@ -16,19 +16,29 @@ import java.util.List;
 public class GastoViewModel extends AndroidViewModel {
 
     private final GastoRepository repository;
-    private final LiveData<List<GastoEntity>> listaGastos;
+    //private final LiveData<List<GastoEntity>> listaGastos;
     private final MutableLiveData<String> recomendacion = new MutableLiveData<>();
-    private final AgenteFinanciero agenteFinanciero = new AgenteFinanciero(250);
+    private final AgenteFinanciero agenteFinanciero;
+    private final MutableLiveData<Double> totalGastos = new MutableLiveData<>();
+    private MutableLiveData<AgenteFinanciero.EstadoFinanciero> estadoFinanciero =
+            new MutableLiveData<>();
+
 
     public GastoViewModel(@NonNull Application application) {
         super(application);
         repository = new GastoRepository(application);
-        listaGastos = repository.obtenerGastos();
-        listaGastos.observeForever(this::procesarGastos);
+
+        agenteFinanciero = new AgenteFinanciero(100);
+
+        repository.obtenerGastos().observeForever(gastos -> {
+            double total = agenteFinanciero.calcularTotalGastos(gastos);
+            totalGastos.postValue(total);
+            recomendacion.postValue(agenteFinanciero.evaluarEstado(total));
+        });
     }
 
     public LiveData<List<GastoEntity>> getListaGastos() {
-        return listaGastos;
+        return repository.obtenerGastos();
     }
 
     public void insertar(GastoEntity gasto) {
@@ -43,9 +53,12 @@ public class GastoViewModel extends AndroidViewModel {
         repository.borrarGasto(gasto);
     }
 
-    public double getTotalGastado(List<GastoEntity>gastos) {
+    /*public double getTotalGastado(List<GastoEntity>gastos) {
         AgenteFinanciero agente = new AgenteFinanciero(250);//presupesto temporal de testeo
         return agente.calcularTotalGastos(gastos);
+    }*/
+    public LiveData<Double> getTotalGastos() {
+        return totalGastos;
     }
 
     public LiveData<String> getRecomendacion() {
@@ -56,6 +69,16 @@ public class GastoViewModel extends AndroidViewModel {
         double total = agenteFinanciero.calcularTotalGastos(gastos);
         String texto = agenteFinanciero.evaluarEstado(total);
         recomendacion.setValue(texto);
+        estadoFinanciero.postValue(agenteFinanciero.obtenerEstado(total));
+    }
+
+    //Función solo para dev
+    public void borrarTodosLosGastos() {
+        repository.borrarTodosLosGastos();
+    }
+
+    public LiveData<AgenteFinanciero.EstadoFinanciero> getEstadoFinanciero() {
+        return estadoFinanciero;
     }
 
 }

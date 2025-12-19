@@ -18,6 +18,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.miapp.agentegamer.R;
 import com.miapp.agentegamer.agent.AgenteFinanciero;
 import com.miapp.agentegamer.data.model.GastoEntity;
+import com.miapp.agentegamer.ui.games.ListaJuegosActivity;
 import com.miapp.agentegamer.ui.gastos.ListaGastosActivity;
 import com.miapp.agentegamer.viewmodel.GastoViewModel;
 import com.github.mikephil.charting.data.PieData;
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Listeners simples
         btnVerJuegos.setOnClickListener(v ->
-                Toast.makeText(this, "Toca para ver Juegos", Toast.LENGTH_SHORT).show()
+             startActivity(new Intent(this, ListaJuegosActivity.class))
         );
 
         btnWishlist.setOnClickListener(v ->

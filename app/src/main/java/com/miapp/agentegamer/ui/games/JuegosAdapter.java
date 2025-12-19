@@ -4,12 +4,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.miapp.agentegamer.R;
+import com.miapp.agentegamer.data.model.WishlistEntity;
 import com.miapp.agentegamer.data.remote.model.GameDto;
+import com.miapp.agentegamer.viewmodel.WishlistViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,15 @@ import java.util.List;
 public class JuegosAdapter extends RecyclerView.Adapter<JuegosAdapter.JuegoViewHolder> {
 
     private List<GameDto> lista = new ArrayList<>();
+    private OnJuegoClickListener listener;
+
+    public interface OnJuegoClickListener {
+        void onJuegoClick(GameDto juego);
+    }
+
+    public void setOnJuegoClickListener(OnJuegoClickListener listener) {
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -31,6 +43,12 @@ public class JuegosAdapter extends RecyclerView.Adapter<JuegosAdapter.JuegoViewH
         GameDto juego = lista.get(position);
         holder.nombre.setText(juego.getName());
         holder.rating.setText("⭐ " + juego.getRating());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onJuegoClick(juego);
+            }
+        });
     }
 
     @Override

@@ -1,0 +1,26 @@
+package com.miapp.agentegamer.data.dao;
+
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+
+import com.miapp.agentegamer.data.model.WishlistEntity;
+
+import java.util.List;
+
+@Dao
+public interface WishlistDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(WishlistEntity juego);
+
+    @Query("SELECT * FROM wishlist")
+    LiveData<List<WishlistEntity>> getWhishlist();
+
+    @Delete
+    void delete(WishlistEntity juego);
+
+}

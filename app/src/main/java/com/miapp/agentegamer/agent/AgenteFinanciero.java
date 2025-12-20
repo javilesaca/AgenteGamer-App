@@ -1,6 +1,8 @@
 package com.miapp.agentegamer.agent;
 
 import com.miapp.agentegamer.data.model.GastoEntity;
+import com.miapp.agentegamer.data.remote.model.GameDto;
+
 import java.util.List;
 
 public class AgenteFinanciero {
@@ -51,6 +53,10 @@ public class AgenteFinanciero {
         }
     }
 
+    public boolean puedeComprar(double gastoActual, double precioJuego) {
+        return (gastoActual + precioJuego) <= presupuestoMensual;
+    }
+
     public enum EstadoFinanciero {
         VERDE, AMARILLO, ROJO
     }
@@ -64,4 +70,23 @@ public class AgenteFinanciero {
             return EstadoFinanciero.ROJO;
         }
     }
+
+    public double estimarPrecio(GameDto juego) {
+
+        //Si no tiene rating asumimos precio medio
+        if (juego.getRating() <= 0) {
+            return 49.99;
+        }
+
+        if (juego.getRating() >= 4.5) {
+            return 69.99;
+        } else if (juego.getRating() >= 4.0) {
+            return 59.99;
+        } else if (juego.getRating() >= 3.5) {
+            return 49.99;
+        } else {
+            return 39.99;
+        }
+    }
+
 }

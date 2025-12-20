@@ -35,16 +35,16 @@ public class ListaJuegosActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(GamesViewModel.class);
         wishlistViewModel = new ViewModelProvider(this).get(WishlistViewModel.class);
 
-        adapter.setOnJuegoClickListener(juego -> {
+        adapter.setOnJuegoClickListener((juego, precioEstimado) -> {
             WishlistEntity entity = new WishlistEntity(
                     juego.getId(),
                     juego.getName(),
                     juego.getReleaseDate(),
                     juego.getImageUrl(),
-                    60.00
+                    precioEstimado
             );
             wishlistViewModel.insertar(entity);
-            Toast.makeText(this, "Añadido a Whishlist", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Añadido a Whishlist(" + precioEstimado + " €", Toast.LENGTH_SHORT).show();
         });
 
         viewModel.obtenerJuegos(API_KEY).observe(this, juegos -> {

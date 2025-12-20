@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.miapp.agentegamer.data.model.WishlistEntity;
 
@@ -19,6 +20,9 @@ public interface WishlistDao {
 
     @Query("SELECT * FROM wishlist")
     LiveData<List<WishlistEntity>> getWhishlist();
+
+    @Update
+    void actualizar(WishlistEntity juego);
 
     @Delete
     void delete(WishlistEntity juego);

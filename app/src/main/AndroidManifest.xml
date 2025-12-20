@@ -36,6 +36,11 @@
             android:name=".ui.games.ListaJuegosActivity"
             android:exported="false">
         </activity>
+        <!-- Activity para ver lista de juegos deseados -->
+        <activity
+            android:name=".ui.wishlist.ListaWishlistActivity"
+            android:exported="false">
+        </activity>
 
     </application>
 

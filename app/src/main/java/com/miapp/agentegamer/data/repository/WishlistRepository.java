@@ -30,4 +30,8 @@ public class WishlistRepository {
     public void insertar(WishlistEntity juego) {
         executor.execute(() -> dao.insert(juego));
     }
+
+    public void actualizar(WishlistEntity juego) {
+        executor.execute(() -> dao.actualizar(juego));
+    }
 }

@@ -20,6 +20,7 @@ import com.miapp.agentegamer.agent.AgenteFinanciero;
 import com.miapp.agentegamer.data.model.GastoEntity;
 import com.miapp.agentegamer.ui.games.ListaJuegosActivity;
 import com.miapp.agentegamer.ui.gastos.ListaGastosActivity;
+import com.miapp.agentegamer.ui.wishlist.ListaWishlistActivity;
 import com.miapp.agentegamer.viewmodel.GastoViewModel;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.charts.PieChart;
@@ -102,9 +103,14 @@ public class MainActivity extends AppCompatActivity {
              startActivity(new Intent(this, ListaJuegosActivity.class))
         );
 
-        btnWishlist.setOnClickListener(v ->
-                Toast.makeText(this, "Toca para ver Wishlist", Toast.LENGTH_SHORT).show()
-        );
+        btnWishlist.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    ListaWishlistActivity.class
+            );
+            startActivity(intent);
+
+        });
 
         btnGastos.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ListaGastosActivity.class);

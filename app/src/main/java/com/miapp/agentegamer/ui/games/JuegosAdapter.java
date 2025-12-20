@@ -10,9 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.miapp.agentegamer.R;
-import com.miapp.agentegamer.data.model.WishlistEntity;
+import com.miapp.agentegamer.agent.AgenteFinanciero;
 import com.miapp.agentegamer.data.remote.model.GameDto;
-import com.miapp.agentegamer.viewmodel.WishlistViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +20,10 @@ public class JuegosAdapter extends RecyclerView.Adapter<JuegosAdapter.JuegoViewH
 
     private List<GameDto> lista = new ArrayList<>();
     private OnJuegoClickListener listener;
+    private AgenteFinanciero agente = new AgenteFinanciero(100);
 
     public interface OnJuegoClickListener {
-        void onJuegoClick(GameDto juego);
+        void onJuegoClick(GameDto juego, double precioEstimado);
     }
 
     public void setOnJuegoClickListener(OnJuegoClickListener listener) {
@@ -40,13 +40,18 @@ public class JuegosAdapter extends RecyclerView.Adapter<JuegosAdapter.JuegoViewH
 
     @Override
     public void onBindViewHolder(@NonNull JuegoViewHolder holder, int position) {
+        AgenteFinanciero agente = new AgenteFinanciero(100);
+
+
         GameDto juego = lista.get(position);
         holder.nombre.setText(juego.getName());
         holder.rating.setText("⭐ " + juego.getRating());
 
+        double precioEstimado = agente.estimarPrecio(juego);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onJuegoClick(juego);
+                listener.onJuegoClick(juego, precioEstimado);
             }
         });
     }

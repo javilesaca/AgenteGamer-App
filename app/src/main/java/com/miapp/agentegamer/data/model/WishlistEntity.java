@@ -14,6 +14,8 @@ public class WishlistEntity {
     private String imagenUrl;
     private double precioEstimado;
 
+
+
     public WishlistEntity(int gameId, String nombre, String fechaLanzamiento, String imagenUrl, double precioEstimado) {
         this.gameId = gameId;
         this.nombre = nombre;

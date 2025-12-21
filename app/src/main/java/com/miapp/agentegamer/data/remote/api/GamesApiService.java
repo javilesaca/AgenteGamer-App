@@ -14,4 +14,12 @@ public interface GamesApiService {
         @Query("ordering") String ordering,
         @Query("page_size") int pageSize
     );
+
+    @GET("games")
+    Call<GamesResponse> searchGames(
+            @Query("key") String apiKey,
+            @Query("search") String texto,
+            @Query("page") int page,
+            @Query("page_size") int pageSize
+    );
 }

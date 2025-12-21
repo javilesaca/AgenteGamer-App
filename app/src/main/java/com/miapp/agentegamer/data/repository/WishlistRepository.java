@@ -20,7 +20,7 @@ public class WishlistRepository {
 
     public WishlistRepository(Application app) {
         AppDatabase db = AppDatabase.getInstance(app);
-        dao = db.whislistDao();
+        dao = db.wishlistDao();
     }
 
     public LiveData<List<WishlistEntity>> getWishlist() {

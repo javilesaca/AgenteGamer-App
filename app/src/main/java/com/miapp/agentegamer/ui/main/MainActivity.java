@@ -10,6 +10,9 @@ import android.content.Intent;
 import androidx.lifecycle.ViewModelProvider;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 
 import com.github.mikephil.charting.data.PieDataSet;
@@ -21,12 +24,14 @@ import com.miapp.agentegamer.data.model.GastoEntity;
 import com.miapp.agentegamer.ui.games.ListaJuegosActivity;
 import com.miapp.agentegamer.ui.gastos.ListaGastosActivity;
 import com.miapp.agentegamer.ui.wishlist.ListaWishlistActivity;
+import com.miapp.agentegamer.ui.worker.AgenteFinancieroWorker;
 import com.miapp.agentegamer.viewmodel.GastoViewModel;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -123,6 +128,17 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Gastos borrados", Toast.LENGTH_SHORT).show();
         });
 
+        // ===============================
+        // WORKER DEL AGENTE FINANCIERO
+        // ===============================
+        // Se ejecuta en segundo plano cada X horas
+        // para evaluar el estado financiero del usuario
+        // y mostrar notificaciones automáticas
+        // ===============================
+
+        PeriodicWorkRequest agenteWorker = new PeriodicWorkRequest.Builder(AgenteFinancieroWorker.class, 6, TimeUnit.HOURS).build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("agente_financiero_worker", ExistingPeriodicWorkPolicy.REPLACE, agenteWorker);
 
     }
 }

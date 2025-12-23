@@ -25,6 +25,12 @@ public interface WishlistDao {
     void actualizar(WishlistEntity juego);
 
     @Delete
-    void delete(WishlistEntity juego);
+    void borrar(WishlistEntity juego);
+
+    @Query("SELECT * FROM wishlist")
+    List<WishlistEntity> getWishlistSync();
+
+    @Query("SELECT SUM(precioEstimado) FROM wishlist")
+    double getTotalGastado();
 
 }

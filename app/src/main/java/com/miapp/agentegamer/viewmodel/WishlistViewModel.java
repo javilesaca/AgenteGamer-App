@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.miapp.agentegamer.agent.AgenteFinanciero;
+import com.miapp.agentegamer.data.model.GastoEntity;
 import com.miapp.agentegamer.data.model.WishlistEntity;
 import com.miapp.agentegamer.data.repository.WishlistRepository;
 
@@ -40,5 +41,18 @@ public class WishlistViewModel extends AndroidViewModel {
         return puede
                 ? "Compra viable con tu presupuesto"
                 : "No recomendable, supera tu presupuesto";
+    }
+
+    public void comprarJuego(WishlistEntity juego, double precioFinal) {
+        //Crear gasto desde el juego
+        GastoEntity gasto = new GastoEntity(
+                juego.getNombre(),
+                precioFinal,
+                System.currentTimeMillis()
+        );
+        //Insertar en Gastos
+        repo.insertarGasto(gasto);
+        //Eliminar de whishlist
+        repo.borrar(juego);
     }
 }

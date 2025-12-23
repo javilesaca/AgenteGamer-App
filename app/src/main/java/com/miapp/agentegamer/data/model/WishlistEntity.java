@@ -3,8 +3,10 @@ package com.miapp.agentegamer.data.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "wishlist")
-public class WishlistEntity {
+public class WishlistEntity implements Serializable {
 
     @PrimaryKey
     private int gameId;
@@ -45,4 +47,5 @@ public class WishlistEntity {
     public double getPrecioEstimado() {
         return precioEstimado;
     }
+
 }

@@ -127,19 +127,6 @@ public class MainActivity extends AppCompatActivity {
             viewModel.borrarTodosLosGastos();
             Toast.makeText(this, "Gastos borrados", Toast.LENGTH_SHORT).show();
         });
-
-        // ===============================
-        // WORKER DEL AGENTE FINANCIERO
-        // ===============================
-        // Se ejecuta en segundo plano cada X horas
-        // para evaluar el estado financiero del usuario
-        // y mostrar notificaciones automáticas
-        // ===============================
-
-        PeriodicWorkRequest agenteWorker = new PeriodicWorkRequest.Builder(AgenteFinancieroWorker.class, 6, TimeUnit.HOURS).build();
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("agente_financiero_worker", ExistingPeriodicWorkPolicy.REPLACE, agenteWorker);
-
     }
 }
 

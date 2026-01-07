@@ -20,7 +20,7 @@ public class WishlistViewModel extends AndroidViewModel {
 
     public WishlistViewModel(@NonNull Application app) {
         super(app);
-        repo = new WishlistRepository(app);
+        repo = new WishlistRepository(app.getApplicationContext());
         agente = new AgenteFinanciero(100);
     }
 

@@ -45,4 +45,8 @@ public class GastoRepository {
     public void borrarTodosLosGastos() {
         executorService.execute(() -> gastoDao.deleteAll());
     }
+
+    public double getTotalGastado() {
+        return gastoDao.getTotalGastado();
+    }
 }

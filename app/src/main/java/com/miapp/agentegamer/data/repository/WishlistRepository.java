@@ -1,6 +1,7 @@
 package com.miapp.agentegamer.data.repository;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
@@ -21,8 +22,8 @@ public class WishlistRepository {
     private final GastoDao gastoDao;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public WishlistRepository(Application app) {
-        AppDatabase db = AppDatabase.getInstance(app);
+    public WishlistRepository(Context context) {
+        AppDatabase db = AppDatabase.getInstance(context.getApplicationContext());
         dao = db.wishlistDao();
         gastoDao = db.gastoDao();
     }

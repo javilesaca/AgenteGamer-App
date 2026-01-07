@@ -28,4 +28,7 @@ public interface GastoDao {
 
     @Query("DELETE FROM gastos")
     void deleteAll();
+
+    @Query("SELECT IFNULL(SUM(precio), 0) FROM gastos")
+    double getTotalGastado();
 }

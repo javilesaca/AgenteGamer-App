@@ -9,34 +9,45 @@ import androidx.work.WorkerParameters;
 
 import com.miapp.agentegamer.agent.AgenteFinanciero;
 import com.miapp.agentegamer.data.model.WishlistEntity;
+import com.miapp.agentegamer.data.repository.GastoRepository;
 import com.miapp.agentegamer.data.repository.WishlistRepository;
+import com.miapp.agentegamer.util.FechaUtils;
 import com.miapp.agentegamer.util.NotificationHelper;
 
 import java.util.List;
 
 public class AgenteFinancieroWorker extends Worker {
 
-    public AgenteFinancieroWorker(@NonNull Context context, @NonNull WorkerParameters params) {
+    private final WishlistRepository wishlistRepo;
+    private final GastoRepository gastoRepo;
+    private final AgenteFinanciero agente;
+
+    public AgenteFinancieroWorker(
+            @NonNull Context context,
+            @NonNull WorkerParameters params
+    ) {
         super(context, params);
+
+        Application app = (Application) getApplicationContext();
+        wishlistRepo = new WishlistRepository(app);
+        gastoRepo = new GastoRepository(app);
+        agente = new AgenteFinanciero(100);
     }
 
     @NonNull
     @Override
     public Result doWork() {
 
-        //Obtener Application desde el Context del Worker
-        Application app = (Application) getApplicationContext();
-        //Repository (Room)
-        WishlistRepository repo = new WishlistRepository(app);
-        //Lógica del Agente
-        AgenteFinanciero agente = new AgenteFinanciero(100);
-        //Obtener la wishlist (sin LiveData, acceso directo)
-        List<WishlistEntity> wishlist = repo.getWishlistSync();
+        //Total gastado por el usuario
+        double totalGastado = gastoRepo.getTotalGastado();
 
-        double total = repo.getTotalGastado();
+        //Juegos en wishlist (acceso síncronico)
+        List<WishlistEntity> whishlist = wishlistRepo.getWishlistSync();
 
-        AgenteFinanciero.EstadoFinanciero estado = agente.obtenerEstado(total);
+        //Estado financiero general
+        AgenteFinanciero.EstadoFinanciero estado = agente.obtenerEstado(totalGastado);
 
+        //Notificación general
         switch (estado) {
             case VERDE:
                 NotificationHelper.mostrar(
@@ -63,6 +74,53 @@ public class AgenteFinancieroWorker extends Worker {
                 break;
         }
 
+        //Recomendación de no comprar juego
+        for (WishlistEntity juego: whishlist) {
+
+            boolean puedeComprar = agente.puedeComprar(totalGastado, juego.getPrecioEstimado());
+
+            if(!puedeComprar) {
+                lanzarNotificacionNoComprar(juego);
+                break;
+            }
+        }
         return Result.success();
     }
+
+    // ===============================
+    // LANZAMIENTOS PRÓXIMOS
+    // ===============================
+    private void avisarLanzamientosProximos() {
+
+        List<WishlistEntity> wishlist = wishlistRepo.getWishlistSync();
+
+        for (WishlistEntity juego : wishlist) {
+
+            if (juego.getFechaLanzamiento() == null) continue;
+
+            long dias = FechaUtils.diasHasta(juego.getFechaLanzamiento());
+
+            if (dias > 0 && dias <= 7) {
+                NotificationHelper.mostrar(
+                        getApplicationContext(),
+                        "Próximo lanzamiento",
+                        juego.getNombre() + " sale en " + dias + " días"
+                );
+            }
+        }
+    }
+
+    // ===============================
+    // NOTIFICACION NO COMPRAR
+    // ===============================
+    private void lanzarNotificacionNoComprar(WishlistEntity juego) {
+
+        NotificationHelper.mostrar(
+                getApplicationContext(),
+                "No es buen momento para comprar ",
+                juego.getNombre() + " (" + juego.getPrecioEstimado() +
+                        " €), supera tu presupuesto actual"
+        );
+    }
 }
+

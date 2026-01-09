@@ -110,6 +110,18 @@
         app:layout_constraintTop_toBottomOf="@id/btnWishlist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+    <!-- Botón Lanzamientos -->
+    <Button
+        android:id="@+id/btnLanzamientos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Lanzamientos"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintTop_toBottomOf="@id/btnGastos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
     <!-- Botón para desarrollo exclusivo y borrar datos de la Room -->
     <Button
         android:id="@+id/btnReset"
@@ -117,7 +129,7 @@
         android:layout_height="wrap_content"
         android:text="Reset gastos (DEV)"
         android:backgroundTint="@color/design_default_color_error"
-        app:layout_constraintTop_toBottomOf="@id/btnGastos"
+        app:layout_constraintTop_toBottomOf="@id/btnLanzamientos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>

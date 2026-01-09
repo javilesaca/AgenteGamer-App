@@ -16,9 +16,23 @@ public class FechaUtils {
             Date hoy = new Date();
 
             long diff = fechajuego.getTime() - hoy.getTime();
-            return TimeUnit.MILLISECONDS.toDays(diff);
+            long dias = TimeUnit.MICROSECONDS.toDays(diff);
+
+            return Math.max(dias, 0); //el return evita numeros negativos
         } catch (ParseException e){
             return Long.MAX_VALUE;
         }
+    }
+
+    public static Date parseFecha(String fecha) {
+        try{
+            return FORMAT.parse(fecha);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static long ahoraTimestamp() {
+        return System.currentTimeMillis();
     }
 }

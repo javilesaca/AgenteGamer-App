@@ -2,6 +2,8 @@ package com.miapp.agentegamer.data.repository;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import com.miapp.agentegamer.data.dao.LanzamientoDao;
 import com.miapp.agentegamer.data.database.AppDatabase;
 import com.miapp.agentegamer.data.model.LanzamientoEntity;
@@ -22,7 +24,7 @@ public class LanzamientoRepository {
         Executors.newSingleThreadExecutor().execute(()-> dao.insertar(lanzamiento));
     }
 
-    public List<LanzamientoEntity> obtenerTodosSync() {
-        return dao.getAllSync();
+    public LiveData<List<LanzamientoEntity>> getProximosLanzamientos() {
+        return dao.getProximosLanzamientos();
     }
 }

@@ -44,6 +44,10 @@
             android:name=".ui.wishlist.ListaWishlistActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".ui.lanzamientos.LanzamientosActivity"
+            android:exported="false">
+        </activity>
 
     </application>
 

@@ -23,6 +23,7 @@ import com.miapp.agentegamer.agent.AgenteFinanciero;
 import com.miapp.agentegamer.data.model.GastoEntity;
 import com.miapp.agentegamer.ui.games.ListaJuegosActivity;
 import com.miapp.agentegamer.ui.gastos.ListaGastosActivity;
+import com.miapp.agentegamer.ui.lanzamientos.LanzamientosActivity;
 import com.miapp.agentegamer.ui.wishlist.ListaWishlistActivity;
 import com.miapp.agentegamer.ui.worker.AgenteFinancieroWorker;
 import com.miapp.agentegamer.viewmodel.GastoViewModel;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnVerJuegos;
     private Button btnWishlist;
     private Button btnGastos;
+    private Button btnLanzamientos;
     public TextView tvRecomendacion;
     public TextView tvTotalGastos;
     private GastoViewModel viewModel;
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         btnVerJuegos = findViewById(R.id.btnVerJuegos);
         btnWishlist = findViewById(R.id.btnWishlist);
         btnGastos = findViewById(R.id.btnGastos);
+        btnLanzamientos = findViewById(R.id.btnLanzamientos);
+
 
         indicador = findViewById(R.id.viewIndicador);
         pieChart = findViewById(R.id.pieChart);
@@ -121,6 +125,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, ListaGastosActivity.class);
             startActivity(intent);
         });
+
+        btnLanzamientos.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, LanzamientosActivity.class);
+            startActivity(intent);
+        });
+
+
         //Boton implementado para uso exclusivo de desarrollo
         Button btnReset = findViewById(R.id.btnReset);
         btnReset.setOnClickListener(v -> {

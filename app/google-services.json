@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "3216889952",
+    "project_id": "agentegamer-b4061",
+    "storage_bucket": "agentegamer-b4061.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3216889952:android:2b1016b5c49ab086cfcb05",
+        "android_client_info": {
+          "package_name": "com.miapp.agentegamer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXBOynWBM86Q_KRbtEk_LSulecKb-Qoto"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

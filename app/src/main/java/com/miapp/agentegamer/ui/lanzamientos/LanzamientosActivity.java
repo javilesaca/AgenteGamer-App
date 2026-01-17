@@ -12,6 +12,11 @@ import com.miapp.agentegamer.viewmodel.LanzamientosViewModel;
 
 public class LanzamientosActivity extends AppCompatActivity {
 
+    private LanzamientosViewModel viewModel;
+    private LanzamientosAdapter adapter;
+
+    private static final String API_KEY = "65370d96089f4bf7bb853f14e14f4fd8";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,11 +25,13 @@ public class LanzamientosActivity extends AppCompatActivity {
         RecyclerView rv = findViewById(R.id.recyclerLanzamientos);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-        LanzamientosAdapter adapter = new LanzamientosAdapter();
+        adapter = new LanzamientosAdapter();
         rv.setAdapter(adapter);
 
-        LanzamientosViewModel vm = new ViewModelProvider(this).get(LanzamientosViewModel.class);
+        viewModel = new ViewModelProvider(this).get(LanzamientosViewModel.class);
 
-        vm.getLanzamientos().observe(this, adapter::setLista);
+        viewModel.getLanzamientos().observe(this, adapter::setLista);
+
+        viewModel.precargaProximos15Dias(API_KEY);
     }
 }

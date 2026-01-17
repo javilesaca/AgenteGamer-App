@@ -2,6 +2,7 @@ package com.miapp.agentegamer.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -34,5 +35,15 @@ public class FechaUtils {
 
     public static long ahoraTimestamp() {
         return System.currentTimeMillis();
+    }
+
+    public static String hoy() {
+        return FORMAT.format(new Date());
+    }
+
+    public static String dentroDeDias(int dias) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, dias);
+        return FORMAT.format(calendar.getTime());
     }
 }

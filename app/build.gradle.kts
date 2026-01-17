@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
     // id("kotlin-android") // comentar porque no uso Kotlin
 }
 
@@ -16,6 +17,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    
 
     buildTypes {
         release {
@@ -26,6 +28,8 @@ android {
             )
         }
     }
+
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -69,5 +73,16 @@ dependencies {
     //Worker
     implementation("androidx.work:work-runtime:2.11.0")
 
+    //Firebase BOM
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+
+    //Firebase Auth
+    implementation("com.google.firebase:firebase-auth")
+
+    //Firestore (para el presupuseto del usuario)
+    implementation("com.google.firebase:firebase-firestore")
+
 }
+
+apply (plugin = "com.google.gms.google-services")
 

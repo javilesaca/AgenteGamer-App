@@ -22,4 +22,12 @@ public interface GamesApiService {
             @Query("page") int page,
             @Query("page_size") int pageSize
     );
+
+    @GET("games")
+    Call<GamesResponse> getFutureGames(
+            @Query("key") String apiKey,
+            @Query("dates") String dates,
+            @Query("ordering") String ordering,
+            @Query("page_size") int pageSize
+    );
 }

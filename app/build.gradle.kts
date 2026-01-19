@@ -73,6 +73,9 @@ dependencies {
     //Worker
     implementation("androidx.work:work-runtime:2.11.0")
 
+    //Guava (ListenableFuture)
+    implementation("com.google.guava:guava:32.1.2-android")
+
     //Firebase BOM
     implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
 

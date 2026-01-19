@@ -18,9 +18,11 @@ import androidx.work.WorkManager;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
 import com.miapp.agentegamer.R;
 import com.miapp.agentegamer.agent.AgenteFinanciero;
 import com.miapp.agentegamer.data.model.GastoEntity;
+import com.miapp.agentegamer.ui.auth.LoginActivity;
 import com.miapp.agentegamer.ui.games.ListaJuegosActivity;
 import com.miapp.agentegamer.ui.gastos.ListaGastosActivity;
 import com.miapp.agentegamer.ui.lanzamientos.LanzamientosActivity;
@@ -45,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
     private GastoViewModel viewModel;
     private View indicador;
     public PieChart pieChart;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

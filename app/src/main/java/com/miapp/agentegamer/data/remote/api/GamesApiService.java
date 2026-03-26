@@ -6,6 +6,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+/**
+ * Interfaz de servicio para la API de RAWG.
+ * Define los endpoints para obtener y buscar juegos.
+ */
 public interface GamesApiService {
 
     @GET("games")

@@ -9,6 +9,10 @@ import androidx.core.app.NotificationCompat;
 
 import com.miapp.agentegamer.R;
 
+/**
+ * Utilidad para mostrar notificaciones del sistema financiero.
+ * Crea canales y construye notificaciones para avisar al usuario.
+ */
 public class NotificationHelper {
 
     private static final String CHANNEL_ID = "finanzas";

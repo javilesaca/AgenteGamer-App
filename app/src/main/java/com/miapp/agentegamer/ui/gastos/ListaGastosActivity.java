@@ -11,9 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.miapp.agentegamer.R;
-import com.miapp.agentegamer.data.model.GastoEntity;
-import com.miapp.agentegamer.viewmodel.GastoViewModel;
+import com.miapp.agentegamer.data.local.entity.GastoEntity;
+import dagger.hilt.android.AndroidEntryPoint;
+import com.miapp.agentegamer.ui.viewmodel.GastoViewModel;
 
+/**
+ * Activity que muestra la lista de gastos en videojuegos del usuario.
+ * Permite agregar, editar y eliminar gastos mensuales.
+ */
+@AndroidEntryPoint
 public class ListaGastosActivity extends AppCompatActivity {
 
     private GastoViewModel gastoViewModel;
@@ -25,14 +31,15 @@ public class ListaGastosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_gastos);
 
+        gastoViewModel = new ViewModelProvider(this).get(GastoViewModel.class);
+
         recyclerView = findViewById(R.id.recyclerGastos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new GastoAdapter(new ArrayList<>());
+        adapter = new GastoAdapter();
         recyclerView.setAdapter(adapter);
 
-        gastoViewModel = new ViewModelProvider(this).get(GastoViewModel.class);
-
+        // Use the ViewModel from ViewModelProvider
         gastoViewModel.getListaGastos().observe(this, gastos -> {
             adapter.setLista(gastos);
         });

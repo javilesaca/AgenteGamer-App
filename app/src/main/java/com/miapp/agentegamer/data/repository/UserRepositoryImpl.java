@@ -6,19 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 import com.miapp.agentegamer.data.model.UsuarioEntity;
 import com.miapp.agentegamer.domain.repository.UserRepository;
 
-import dagger.BindsInstance;
-import dagger.Lazy;
-import dagger.MapKey;
-import dagger.Module;
-import dagger.Provides;
-import dagger.Singleton;
-import dagger.hilt.InstallIn;
-import dagger.hilt.components.SingletonComponent;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Data source that handle user information persistence operations.
@@ -61,12 +53,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public interface  OnUsuarioCallback {
-        void onSuccess(UsuarioEntity usuario);
-        void onError();
-    }
-
-    @Override
     public void obtenerPresupuesto(OnPresupuestoCallback callback) {
 
         FirebaseUser user = auth.getCurrentUser();
@@ -87,12 +73,6 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 })
                 .addOnFailureListener(e -> callback.onError());
-    }
-
-    @Override
-    public interface OnPresupuestoCallback {
-        void onSuccess(double presupuesto);
-        void onError();
     }
 
     @Override

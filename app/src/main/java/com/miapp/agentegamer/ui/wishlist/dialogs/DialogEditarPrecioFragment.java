@@ -13,9 +13,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.miapp.agentegamer.R;
-import com.miapp.agentegamer.data.model.WishlistEntity;
-import com.miapp.agentegamer.viewmodel.WishlistViewModel;
+import com.miapp.agentegamer.data.local.entity.WishlistEntity;
+import com.miapp.agentegamer.ui.viewmodel.WishlistViewModel;
 
+/**
+ * Dialog para editar el precio estimado de un juego en la wishlist.
+ * Permite al usuario actualizar el precio antes de una compra.
+ */
 public class DialogEditarPrecioFragment extends DialogFragment {
 
     private static final String ARG_JUEGO = "juego";
@@ -65,6 +69,7 @@ public class DialogEditarPrecioFragment extends DialogFragment {
                             juego.getNombre(),
                             juego.getFechaLanzamiento(),
                             juego.getImagenUrl(),
+                            juego.getPlataforma(),
                             nuevoPrecio
                     );
 
@@ -79,10 +84,10 @@ public class DialogEditarPrecioFragment extends DialogFragment {
 
         dialog.setOnShowListener(d -> {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                .setTextColor(ContextCompat.getColor(requireContext(), R.color.gris_confirmar));
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
 
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-                .setTextColor(ContextCompat.getColor(requireContext(), R.color.gris_cancelar));
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
         });
 
         return dialog;

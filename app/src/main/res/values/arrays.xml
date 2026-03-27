@@ -1,2 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+<string-array name="plataformas_array">
+    <item>Steam</item>
+    <item>Epic Games Store</item>
+    <item>GOG</item>
+    <item>Nintendo Store</item>
+    <item>PlayStation Store</item>
+    <item>Xbox Store</item>
+    <item>EA App</item>
+    <item>Ubisoft Connect</item>
+</string-array>
+</resources>
+

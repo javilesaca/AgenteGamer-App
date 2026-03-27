@@ -10,8 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.miapp.agentegamer.R;
 import com.miapp.agentegamer.ui.wishlist.dialogs.DialogDetalleJuegoFragment;
 import com.miapp.agentegamer.ui.wishlist.dialogs.DialogEditarPrecioFragment;
-import com.miapp.agentegamer.viewmodel.WishlistViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
+import com.miapp.agentegamer.ui.viewmodel.WishlistViewModel;
 
+/**
+ * Activity que muestra la lista de juegos en la wishlist del usuario.
+ * Permite ver detalles de juegos, editar precios y confirmar compras.
+ */
+@AndroidEntryPoint
 public class ListaWishlistActivity extends AppCompatActivity {
 
     private WishlistViewModel viewModel;
@@ -23,6 +29,8 @@ public class ListaWishlistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_wishlist);
 
+        viewModel = new ViewModelProvider(this).get(WishlistViewModel.class);
+
         RecyclerView recyclerView = findViewById(R.id.recyclerWishlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -33,9 +41,12 @@ public class ListaWishlistActivity extends AppCompatActivity {
             DialogDetalleJuegoFragment.newInstance(juego).show(getSupportFragmentManager(), "detalleJuego");
         });
 
-        viewModel = new ViewModelProvider(this).get(WishlistViewModel.class);
+        adapter.setOnEliminarClickListener(juego -> {
+            viewModel.borrar(juego);
+        });
 
-        viewModel.getWishlist().observe(this, adapter::setLista);
+        // ViewModel from ViewModelProvider
+        viewModel.getWishList().observe(this, adapter::setLista);
     }
 
 }

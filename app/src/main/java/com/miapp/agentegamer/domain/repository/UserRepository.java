@@ -3,6 +3,10 @@ package com.miapp.agentegamer.domain.repository;
 import androidx.lifecycle.LiveData;
 import com.miapp.agentegamer.data.model.UsuarioEntity;
 
+/**
+ * Interfaz del repositorio de usuario.
+ * Define las operaciones para gestionar datos del usuario en Firestore.
+ */
 public interface UserRepository {
     void obtenerUsuario(OnUsuarioCallback callback);
     void obtenerPresupuesto(OnPresupuestoCallback callback);
